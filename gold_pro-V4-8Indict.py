@@ -104,8 +104,8 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     st.info(f"DMP Score(): {indicators["DMP"]}")
     st.info(f"DMN Score(): {indicators["DMN"]}")
 
-    st.info(f"PRICE<=BBL? Score: {price },{last[get_col(df, 'BBL')]}")
-    st.info(f"PRICE>=BBU? Score: {price },{last[get_col(df, 'BBU')]}")
+    st.info(f"PRICE<=BBL? Score: {price } , {last[get_col(df, 'BBL')]}")
+    st.info(f"PRICE>=BBU? Score: {price } , {last[get_col(df, 'BBU')]}")
 
 
 
