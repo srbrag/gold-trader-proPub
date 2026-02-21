@@ -93,18 +93,21 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     st.info(f"BUY Confluence Score: {buy_score}/8 Indicators Aligning")
     st.info(f"SELL Confluence Score: {sell_score}/8 Indicators Aligning") #SRB ADDED THIS
     
-    st.info(f"RSI Score(30/70): {indicators["RSI"]}")
+    st.info(f"PRICE Score: {price}")
+    st.info(f"STOCK_RSI_K Score(20/80): {indicators["STOCK_RSI_K"]}")
+    st.info(f"CCI Score(100/-100): {indicators["CCI"]}")
+    st.info(f"CRSI Score(30/70): {indicators["CRSI"]}")
     st.info(f"MFI Score(20/80): {indicators["MFI"]}")
     st.info(f"STOCH_K Score(20/80): {indicators["STOCH_K"]}")
-    st.info(f"STOCK_RSI_K Score(20/80): {indicators["STOCK_RSI_K"]}")
-    st.info(f"CRSI Score(30/70): {indicators["CRSI"]}")
-    st.info(f"PRICE<=BBL? Score: {last[get_col(df, 'BBL')]}")
-    st.info(f"PRICE>=BBU? Score: {last[get_col(df, 'BBU')]}")
-
-    st.info(f"CCI Score(100/-100): {indicators["CCI"]}")
+    st.info(f"RSI Score(30/70): {indicators["RSI"]}")
     st.info(f"ADX Score(25): {indicators["ADX"]}")
     st.info(f"DMP Score(): {indicators["DMP"]}")
     st.info(f"DMN Score(): {indicators["DMN"]}")
+
+    st.info(f"PRICE<=BBL? Score: {price },{last[get_col(df, 'BBL')]}")
+    st.info(f"PRICE>=BBU? Score: {price },{last[get_col(df, 'BBU')]}")
+
+
 
 
     c1, c2, c3 = st.columns(3)
