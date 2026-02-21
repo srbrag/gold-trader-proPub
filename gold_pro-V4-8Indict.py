@@ -103,7 +103,7 @@ st.info(f"PRICE>=BBU? Score: {last[get_col(df, 'BBU')]}")
 
 st.info(f"CCI Score(100/-100): {indicators["CCI"]}")
 st.info(f"ADX Score(25): {indicators["ADX"]}")
-st.info(f"DMP Score(): indicators["DMP"]}")
+st.info(f"DMP Score(): {indicators["DMP"]}")
 st.info(f"DMN Score(): {indicators["DMN"]}")
 
 
@@ -135,3 +135,4 @@ st.info(f"DMN Score(): {indicators["DMN"]}")
 
     fig.update_layout(height=1000, template="plotly_dark", xaxis_rangeslider_visible=False)
     st.plotly_chart(fig, use_container_width=True)
+
