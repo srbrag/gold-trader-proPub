@@ -25,6 +25,8 @@ def get_gold_signals():
     # 3. VOLUME & FLOW
     df.ta.mfi(length=14, append=True)                  # MFI
 
+    df['datetime'] = pd.to_datetime(df['datetime'])
+    df.set_index('datetime', inplace=True)
     df.ta.vwap(append=True)
     df.ta.psar(append=True)
     
@@ -132,23 +134,29 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     if last[f('VWAP')][0] > price: sell_score += 1 # Price below VWAP = Bearish
     if last[f('PSARl')][0] > price: sell_score += 1 # PSAR dots above price
 
-    action = "WAIT / NEUTRAL"
-    if buy_score >= 5: action = "PROBABLE BUY"
-    if buy_score >= 7: action = "ULTRA HIGH PROBABILITY BUY"
+    #action = "WAIT / NEUTRAL"
+    #if buy_score >= 5: action = "PROBABLE BUY"
+    #if buy_score >= 7: action = "ULTRA HIGH PROBABILITY BUY"
 
     # --- UI DISPLAY ---
-    st.header(f"System Verdict: {action}")
-    st.info(f"BUY Confluence Score: {buy_score}/13 Indicators Aligning")
-    st.info(f"SELL Confluence Score: {sell_score}/13 Indicators Aligning") #SRB ADDED THIS
+    #st.header(f"System Verdict: {action}")
+    st.info(f"BUY Confluence Score: {buy_score}/15 Indicators Aligning , "
+    f"SELL Confluence Score: {sell_score}/15 Indicators Aligning")
+
+    #st.info(f"SELL Confluence Score: {sell_score}/15 Indicators Aligning") #SRB ADDED THIS
+    #st.info(f"PRICE Score: {price}")
     
-    st.info(f"PRICE Score: {price}")
+    c1, c2, c3 = st.columns(3)
+    c1.metric("ENTRY", f"${price:.2f}")
+    c2.metric("TP (Take Profit)", f"${price + 45:.2f}")
+    c3.metric("SL (Stop Loss)", f"${price - 22:.2f}")
+
     st.info(
     f"STOCH_RSI_K Score(20/80): {indicators['STOCK_RSI_K']} , "
     f"{':green[**BUY 🟢**]' if indicators['STOCK_RSI_K'] <= 20 else 
        ':red[**SELL 🔴**]' if indicators['STOCK_RSI_K'] >= 80 else 
        ':gray[**NEUTRAL ⚪**]'}"
             )
-
     st.info(
     f"CCI Score(100/-100): {indicators["CCI"]} , "
     f"{':green[**BUY 🟢**]' if indicators["CCI"] <= -100 else 
@@ -185,9 +193,16 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
        ':gray[**NEUTRAL ⚪**]'} , "
     f"DMP Score(): {indicators["DMP"]} , "
     f"DMN Score(): {indicators["DMN"]} , "
-    
     f"{':green[**BUY 🟢**]' if indicators['ADX'] >= 25 and indicators["DMP"] > indicators["DMN"] else
        ':red[**SELL 🔴**]' if indicators['ADX'] >= 25 and indicators["DMN"] > indicators["DMP"] else
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+    st.info(
+    f"(PRICE<=BBL:BUY OR >=BBU:SELL): {price} , "
+    f"BBU Score(): {last[get_col(df, 'BBU')]} , "
+    f"BBL Score(): {last[get_col(df, 'BBL')]} , "
+    f"{':green[**BUY 🟢**]' if price <= last[get_col(df, 'BBL')] else
+       ':red[**SELL 🔴**]' if price >= last[get_col(df, 'BBU')] else
        ':gray[**NEUTRAL ⚪**]'}"
             )
 
@@ -197,11 +212,9 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     #st.info(f"STOCH_K Score(20/80): {indicators["STOCH_K"]}")
     #st.info(f"RSI Score(30/70): {indicators["RSI"]}")
     #st.info(f"ADX Score(25): {indicators["ADX"]}")
-
-
     #st.info(f"DMP Score(): {indicators["DMP"]}")
     #st.info(f"DMN Score(): {indicators["DMN"]}")
-    st.info(f"(PRICE<=BBL:BUY OR >=BBU:SELL): {price } , {last[get_col(df, 'BBL')]} , {last[get_col(df, 'BBU')]}")
+    #st.info(f"(PRICE<=BBL:BUY OR >=BBU:SELL): {price } , {last[get_col(df, 'BBL')]} , {last[get_col(df, 'BBU')]}")
 
     
     st.info(
@@ -228,24 +241,36 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
        ':red[**SELL 🔴**]' if last[f('WILLR')[0]] >= -20 else 
        ':gray[**NEUTRAL ⚪**]'}"
             )
+    st.info(
+    f"(Donchian Channels (DC) (PRICE<=LOWER:BUY OR >=UPPER:SELL): {price} , "
+    f"UPPER Score(): {last[dc_upper[0]]} , "
+    f"LOWER Score(): {last[dc_lower[0]]} , "
+    f"{':green[**BUY 🟢**]' if price <= last[dc_lower[0]] else
+       ':red[**SELL 🔴**]' if price >= last[last[dc_upper[0]] else
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+    st.info(
+    f"(VWAP (PRICE>VWAP:BUY OR <VWAP:SELL): {price} , "
+    f"VWAP Score(): {last[f('VWAP')][0]} , "
+    f"{':green[**BUY 🟢**]' if price > last[f('VWAP')][0] else
+       ':red[**SELL 🔴**]' if price < last[f('VWAP')][0] else
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+    st.info(
+    f"(PSAR (PRICE>PSAR dots:BUY OR <PSAR dots:SELL): {price} , "
+    f"PSAR Score(): {last[f('PSARl')][0]} , "
+    f"{':green[**BUY 🟢**]' if price > last[f('PSARl')][0] else
+       ':red[**SELL 🔴**]' if price < last[f('PSARl')][0] else
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
 
     #st.info(f"Chaikin Money Flow (CMF) (>0:BUY , <0:SELL): {last[f('CMF')[0]]}")
     #st.info(f"SUPERTd DIRECTION (=1:BUY , =-1:SELL): {last[st_dir_col[0]]}")
     #st.info(f"Ultimate Oscillator (UO)(30/70): {last[f('UO')[0]]}")
-    
-    st.info(f"Donchian Channels (DC) (PRICE<=LOWER:BUY OR >=UPPER:SELL): {price } , {last[dc_lower[0]]} , {last[dc_upper[0]]}")
-    
     #st.info(f"Williams %R (WILLR) Score(<=-80:BUY , >=-20:SELL): {last[f('WILLR')[0]]}")
-    
-    st.info(f"VWAP (PRICE>VWAP:BUY OR <VWAP:SELL): {price } , {last[f('VWAP')][0]}")
-    st.info(f"PSAR (PRICE>PSAR dots:BUY OR <PSAR dots:SELL): {price } , {last[f('PSARl')][0]}")
-
-
-
-    c1, c2, c3 = st.columns(3)
-    c1.metric("ENTRY", f"${price:.2f}")
-    c2.metric("TP (Take Profit)", f"${price + 45:.2f}")
-    c3.metric("SL (Stop Loss)", f"${price - 22:.2f}")
+    #st.info(f"Donchian Channels (DC) (PRICE<=LOWER:BUY OR >=UPPER:SELL): {price } , {last[dc_lower[0]]} , {last[dc_upper[0]]}")
+    #st.info(f"VWAP (PRICE>VWAP:BUY OR <VWAP:SELL): {price } , {last[f('VWAP')][0]}")
+    #st.info(f"PSAR (PRICE>PSAR dots:BUY OR <PSAR dots:SELL): {price } , {last[f('PSARl')][0]}")
 
     # --- FULL INDICATOR CHART ---
     fig = make_subplots(rows=4, cols=1, shared_xaxes=True, vertical_spacing=0.02,
