@@ -196,9 +196,10 @@ st.info(
     #st.info(f"STOCH_K Score(20/80): {indicators["STOCH_K"]}")
     #st.info(f"RSI Score(30/70): {indicators["RSI"]}")
     #st.info(f"ADX Score(25): {indicators["ADX"]}")
+
+
     st.info(f"DMP Score(): {indicators["DMP"]}")
     st.info(f"DMN Score(): {indicators["DMN"]}")
-
     st.info(f"(PRICE<=BBL:BUY OR >=BBU:SELL): {price } , {last[get_col(df, 'BBL')]} , {last[get_col(df, 'BBU')]}")
 
     st.info(f"Chaikin Money Flow (CMF) (>0:BUY , <0:SELL): {last[f('CMF')[0]]}")
