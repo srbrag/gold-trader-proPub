@@ -31,6 +31,23 @@ def get_gold_signals():
                   ta.rsi(df['Close'].diff().apply(lambda x: 1 if x > 0 else -1), length=2) + 
                   df['Close'].pct_change().rolling(100).rank(pct=True)*100) / 3
     
+#SRB ADDED THIS entire block:
+    # 5. Chaikin Money Flow (CMF) - Detects Institutional Accumulation
+    df.ta.cmf(high='High', low='Low', close='Close', volume='Volume', length=20, append=True)
+
+    # 6. SuperTrend (ST) - The "Trend Gatekeeper" (Volatility-based)
+# This returns 4 columns: SUPERT_7_3.0, SUPERTd_7_3.0 (Direction), SUPERTl_7_3.0, SUPERTs_7_3.0
+    df.ta.supertrend(high='High', low='Low', close='Close', length=7, multiplier=3.0, append=True)
+
+    # 7. Ultimate Oscillator (UO) - Triple-Timeframe Momentum
+    df.ta.uo(high='High', low='Low', close='Close', fast=7, medium=14, slow=28, append=True)
+
+    # 8. Donchian Channels (DC) - Identifies Price Extremes/Breakouts
+    df.ta.donchian(high='High', low='Low', lower_length=20, upper_length=20, append=True)
+
+    # 9. Williams %R (WILLR) - Fast Momentum Reversal
+    df.ta.willr(high='High', low='Low', close='Close', length=14, append=True)
+
     return df
 
 st.title("🏆 Gold Sentinel v3: Full Confluence Engine")
@@ -43,6 +60,15 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     
     last = df.iloc[-1]
     price = last['Close']
+
+#SRB ADDED THIS entire block:
+# --- SCORING UPDATES FOR THESE 5 ---
+# Find dynamic columns for SuperTrend and Donchian
+    def f(k): return [c for c in df.columns if k in c]
+    st_dir_col = f('SUPERTd') # Direction: 1 for Buy, -1 for Sell
+    dc_lower = f('DCL')
+    dc_upper = f('DCU')
+
     
     # Mapping Indicators for Analysis
     indicators = {
@@ -70,6 +96,14 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     if indicators["ADX"] >= 25: #SRB ADDED THIS: if indicators["ADX"] >= 25: buy_score += 1 # Confirming Trend Strength
         if indicators["DMP"] > indicators["DMN"]: buy_score += 1 # DI+ > DI-
 
+#SRB ADDED THIS entire block:
+# BUY Score Addition (Oversold/Bullish)
+    if last[f('CMF')] > 0: buy_score += 1
+    if last[st_dir_col] == 1: buy_score += 1
+    if last[f('UO')] < 30: buy_score += 1
+    if price <= last[dc_lower]: buy_score += 1
+    if last[f('WILLR')] < -80: buy_score += 1
+
 
     sell_score = 0 #SRB ADDED THIS entire sell block
     if indicators["RSI"] >= 70: sell_score += 1 #SRB OR <30 >70
@@ -83,6 +117,14 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     if indicators["ADX"] >= 25: #SRB ADDED THIS: if indicators["ADX"] >= 25: buy_score += 1 # Confirming Trend Strength
         if indicators["DMN"] > indicators["DMP"]: sell_score += 1 # DI- > DI+
 
+#SRB ADDED THIS entire block:
+# SELL Score Addition (Overbought/Bearish)
+    if last[f('CMF')] < 0: sell_score += 1
+    if last[st_dir_col] == -1: sell_score += 1
+    if last[f('UO')] > 70: sell_score += 1
+    if price >= last[dc_upper]: sell_score += 1
+    if last[f('WILLR')] > -20: sell_score += 1
+
 
     action = "WAIT / NEUTRAL"
     if buy_score >= 5: action = "PROBABLE BUY"
@@ -90,8 +132,8 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     # --- UI DISPLAY ---
     st.header(f"System Verdict: {action}")
-    st.info(f"BUY Confluence Score: {buy_score}/8 Indicators Aligning")
-    st.info(f"SELL Confluence Score: {sell_score}/8 Indicators Aligning") #SRB ADDED THIS
+    st.info(f"BUY Confluence Score: {buy_score}/13 Indicators Aligning")
+    st.info(f"SELL Confluence Score: {sell_score}/13 Indicators Aligning") #SRB ADDED THIS
     
     st.info(f"PRICE Score: {price}")
     st.info(f"STOCK_RSI_K Score(20/80): {indicators["STOCK_RSI_K"]}")
