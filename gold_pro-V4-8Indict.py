@@ -27,10 +27,10 @@ def get_gold_signals():
 
     
 # 1. Force the column to datetime objects
-    df['datetime'] = pd.to_datetime(df['datetime'])
+    #df['datetime'] = pd.to_datetime(df['datetime'])
 
 # 2. Set it as the index (Crucial for VWAP!)
-    df.set_index('datetime', inplace=True)
+    #df.set_index('datetime', inplace=True)
 
 # 3. Sort it (VWAP must be calculated in chronological order)
     df.sort_index(inplace=True)
