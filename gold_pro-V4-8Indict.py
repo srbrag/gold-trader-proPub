@@ -180,13 +180,14 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
        ':gray[**NEUTRAL ⚪**]'}"
             )
 
+
 st.info(
     f"ADX Score(25): {indicators["ADX"]} , "
-    f"{':red[**Hi Trend Strength 🔴**]' if (indicators["ADX"] >= 25 else
+    f"{':red[**Hi Trend Strength 🔴**]' if indicators["ADX"] >= 25 else
        ':gray[**NEUTRAL ⚪**]'}"
             )
-    f"{':green[**BUY 🟢**]' if (indicators["ADX"] >= 25 AND indicators["DMP"] > indicators["DMN"] else
-       ':red[**SELL 🔴**]' if (indicators["ADX"] >= 25 AND indicators["DMN"] > indicators["DMP"] else
+    f"{':green[**BUY 🟢**]' if indicators["ADX"] >= 25 AND indicators["DMP"] > indicators["DMN"] else
+       ':red[**SELL 🔴**]' if indicators["ADX"] >= 25 AND indicators["DMN"] > indicators["DMP"] else
        ':gray[**NEUTRAL ⚪**]'}"
             )
 
