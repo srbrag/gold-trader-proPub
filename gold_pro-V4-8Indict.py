@@ -57,7 +57,7 @@ st.title("🏆 Gold Sentinel v3: Full Confluence Engine")
 
 if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     df = get_gold_signals()
-    st.write(df.index)
+    #st.write(df.index)
 # Convert the index itself to DatetimeIndex
     df.index = pd.to_datetime(df.index)
 
@@ -322,4 +322,3 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     fig.update_layout(height=1000, template="plotly_dark", xaxis_rangeslider_visible=False)
     st.plotly_chart(fig, use_container_width=True)
-
