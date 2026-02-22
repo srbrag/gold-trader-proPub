@@ -98,11 +98,12 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
 #SRB ADDED THIS entire block:
 # BUY Score Addition (Oversold/Bullish)
-    if last[f('CMF')] > 0: buy_score += 1
-    if last[st_dir_col] == 1: buy_score += 1
-    if last[f('UO')] < 30: buy_score += 1
-    if price <= last[dc_lower]: buy_score += 1
-    if last[f('WILLR')] < -80: buy_score += 1
+    # BUY Score Addition
+    if last[f('CMF')[0]] > 0: buy_score += 1
+    if last[st_dir_col[0]] == 1: buy_score += 1
+    if last[f('UO')[0]] < 30: buy_score += 1
+    if price <= last[dc_lower[0]]: buy_score += 1
+    if last[f('WILLR')[0]] < -80: buy_score += 1
 
 
     sell_score = 0 #SRB ADDED THIS entire sell block
@@ -119,11 +120,11 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
 #SRB ADDED THIS entire block:
 # SELL Score Addition (Overbought/Bearish)
-    if last[f('CMF')] < 0: sell_score += 1
-    if last[st_dir_col] == -1: sell_score += 1
-    if last[f('UO')] > 70: sell_score += 1
-    if price >= last[dc_upper]: sell_score += 1
-    if last[f('WILLR')] > -20: sell_score += 1
+    if last[f('CMF')[0]] < 0: sell_score += 1
+    if last[st_dir_col[0]] == -1: sell_score += 1
+    if last[f('UO')[0]] > 70: sell_score += 1
+    if price >= last[dc_upper[0]]: sell_score += 1
+    if last[f('WILLR')[0]] > -20: sell_score += 1
 
 
     action = "WAIT / NEUTRAL"
