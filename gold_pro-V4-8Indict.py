@@ -181,7 +181,7 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
             )
 
 
-st.info(
+    st.info(
     f"ADX Score(25): {indicators["ADX"]} , "
     f"{':red[**Hi Trend Strength 🔴**]' if indicators["ADX"] >= 25 else
        ':gray[**NEUTRAL ⚪**]'}"
