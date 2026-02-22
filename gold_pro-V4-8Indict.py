@@ -27,10 +27,10 @@ def get_gold_signals():
 
     
 # 1. Force the column to datetime objects
-    #df['datetime'] = pd.to_datetime(df['datetime'])
+    df['datetime'] = pd.to_datetime(df['Datetime'])
 
 # 2. Set it as the index (Crucial for VWAP!)
-    #df.set_index('datetime', inplace=True)
+    df.set_index('Datetime', inplace=True)
 
 # 3. Sort it (VWAP must be calculated in chronological order)
     df.sort_index(inplace=True)
@@ -71,8 +71,8 @@ st.title("🏆 Gold Sentinel v3: Full Confluence Engine")
 if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     df = get_gold_signals()
     st.write(df.index)
-    st.write("Available columns:", df.columns.tolist())
-    #df['datetime'] = pd.to_datetime(df['datetime'])
+    #st.write("Available columns:", df.columns.tolist())
+    #df['datetime'] = pd.to_datetime(df['Datetime'])
     #df.set_index('datetime', inplace=True)
 
     # --- DYNAMIC KEY DETECTION (Prevents KeyError) ---
