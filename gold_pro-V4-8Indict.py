@@ -246,7 +246,7 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     f"UPPER Score(): {last[dc_upper[0]]} , "
     f"LOWER Score(): {last[dc_lower[0]]} , "
     f"{':green[**BUY 🟢**]' if price <= last[dc_lower[0]] else
-       ':red[**SELL 🔴**]' if price >= last[last[dc_upper[0]] else
+       ':red[**SELL 🔴**]' if price >= last[dc_upper[0]] else
        ':gray[**NEUTRAL ⚪**]'}"
             )
     st.info(
@@ -295,3 +295,4 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     fig.update_layout(height=1000, template="plotly_dark", xaxis_rangeslider_visible=False)
     st.plotly_chart(fig, use_container_width=True)
+
