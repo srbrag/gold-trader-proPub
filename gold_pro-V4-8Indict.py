@@ -59,6 +59,8 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     df = get_gold_signals()
     st.write(df.index)
     # 1. Force the column to datetime objects
+    st.write("Columns found:", df.columns.tolist())
+    st.write("Index name:", df.index.name)
     df['Datetime'] = pd.to_datetime(df['Datetime'])
 
 # 2. Set it as the index (Crucial for VWAP!)
