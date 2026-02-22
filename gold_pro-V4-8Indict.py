@@ -27,7 +27,7 @@ def get_gold_signals():
 
     
 # 1. Force the column to datetime objects
-    df['datetime'] = pd.to_datetime(df['Datetime'])
+    df['Datetime'] = pd.to_datetime(df['Datetime'])
 
 # 2. Set it as the index (Crucial for VWAP!)
     df.set_index('Datetime', inplace=True)
