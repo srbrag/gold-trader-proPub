@@ -58,13 +58,18 @@ st.title("🏆 Gold Sentinel v3: Full Confluence Engine")
 if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     df = get_gold_signals()
     st.write(df.index)
+# Convert the index itself to DatetimeIndex
+    df.index = pd.to_datetime(df.index)
+
+# Ensure it's named correctly for your other code
+    df.index.name = 'datetime'
     # 1. Force the column to datetime objects
-    st.write("Columns found:", df.columns.tolist())
-    st.write("Index name:", df.index.name)
-    df['Datetime'] = pd.to_datetime(df['Datetime'])
+    #st.write("Columns found:", df.columns.tolist())
+    #st.write("Index name:", df.index.name)
+    #df['Datetime'] = pd.to_datetime(df['Datetime'])
 
 # 2. Set it as the index (Crucial for VWAP!)
-    df.set_index('Datetime', inplace=True)
+   # df.set_index('Datetime', inplace=True)
 
 # 3. Sort it (VWAP must be calculated in chronological order)
     df.sort_index(inplace=True)
