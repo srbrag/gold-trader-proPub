@@ -57,8 +57,8 @@ st.title("🏆 Gold Sentinel v3: Full Confluence Engine")
 
 if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     df = get_gold_signals()
-    df['datetime'] = pd.to_datetime(df['datetime'])
-    df.set_index('datetime', inplace=True)
+    #df['datetime'] = pd.to_datetime(df['datetime'])
+    #df.set_index('datetime', inplace=True)
 
     # --- DYNAMIC KEY DETECTION (Prevents KeyError) ---
     def get_col(df, keyword): return [c for c in df.columns if keyword in c][0]
