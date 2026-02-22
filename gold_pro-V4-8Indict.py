@@ -25,8 +25,6 @@ def get_gold_signals():
     # 3. VOLUME & FLOW
     df.ta.mfi(length=14, append=True)                  # MFI
 
-    df['datetime'] = pd.to_datetime(df['datetime'])
-    df.set_index('datetime', inplace=True)
     df.ta.vwap(append=True)
     df.ta.psar(append=True)
     
@@ -59,7 +57,9 @@ st.title("🏆 Gold Sentinel v3: Full Confluence Engine")
 
 if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     df = get_gold_signals()
-    
+    df['datetime'] = pd.to_datetime(df['datetime'])
+    df.set_index('datetime', inplace=True)
+
     # --- DYNAMIC KEY DETECTION (Prevents KeyError) ---
     def get_col(df, keyword): return [c for c in df.columns if keyword in c][0]
     
@@ -295,4 +295,3 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     fig.update_layout(height=1000, template="plotly_dark", xaxis_rangeslider_visible=False)
     st.plotly_chart(fig, use_container_width=True)
-
