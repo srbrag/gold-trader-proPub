@@ -142,7 +142,7 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     st.info(f"SELL Confluence Score: {sell_score}/13 Indicators Aligning") #SRB ADDED THIS
     
     st.info(f"PRICE Score: {price}")
-    st.info(f"STOCK_RSI_K Score(20/80): {indicators["STOCK_RSI_K"]}")
+    st.info(f"STOCH_RSI_K Score(20/80): {indicators["STOCK_RSI_K"]}")
     st.info(f"CCI Score(100/-100): {indicators["CCI"]}")
     st.info(f"CRSI Score(30/70): {indicators["CRSI"]}")
     st.info(f"MFI Score(20/80): {indicators["MFI"]}")
@@ -192,3 +192,4 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     fig.update_layout(height=1000, template="plotly_dark", xaxis_rangeslider_visible=False)
     st.plotly_chart(fig, use_container_width=True)
+
