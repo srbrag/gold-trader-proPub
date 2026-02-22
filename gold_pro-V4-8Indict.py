@@ -14,7 +14,7 @@ def get_gold_signals():
     
     # 1. CORE TREND & VOLATILITY
     df.ta.bbands(length=20, std=2, append=True)         # BB
-    df.ta.adx(length=14, append=True)                  # DMI / ADX
+    df.ta.adx(length=14, append=True)                   # DMI / ADX
     
     # 2. MOMENTUM & OSCILLATORS
     df.ta.rsi(length=14, append=True)                  # RSI
@@ -179,8 +179,6 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
        ':red[**SELL 🔴**]' if indicators["RSI"] >= 70 else 
        ':gray[**NEUTRAL ⚪**]'}"
             )
-
-
     st.info(
     f"ADX Score(25): {indicators["ADX"]} , "
     f"{':red[**Hi Trend Strength 🔴**]' if indicators["ADX"] >= 25 else
@@ -202,11 +200,40 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     st.info(f"DMN Score(): {indicators["DMN"]}")
     st.info(f"(PRICE<=BBL:BUY OR >=BBU:SELL): {price } , {last[get_col(df, 'BBL')]} , {last[get_col(df, 'BBU')]}")
 
-    st.info(f"Chaikin Money Flow (CMF) (>0:BUY , <0:SELL): {last[f('CMF')[0]]}")
-    st.info(f"SUPERTd DIRECTION (=1:BUY , =-1:SELL): {last[st_dir_col[0]]}")
-    st.info(f"Ultimate Oscillator (UO)(30/70): {last[f('UO')[0]]}")
+    
+    st.info(
+    f"Chaikin Money Flow (CMF) (>0:BUY , <0:SELL): {last[f('CMF')[0]]} , "
+    f"{':green[**BUY 🟢**]' if last[f('CMF')[0]] > 0 else 
+       ':red[**SELL 🔴**]' if last[f('CMF')[0]] < 0 else 
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+    st.info(
+    f"SUPERTd DIRECTION (=1:BUY , =-1:SELL): {last[st_dir_col[0]]} , "
+    f"{':green[**BUY 🟢**]' if last[st_dir_col[0]] == 1 else 
+       ':red[**SELL 🔴**]' if last[st_dir_col[0]] == -1 else 
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+    st.info(
+    f"Ultimate Oscillator (UO)(30/70): {last[f('UO')[0]]} , "
+    f"{':green[**BUY 🟢**]' if last[f('UO')[0]] <= 30 else 
+       ':red[**SELL 🔴**]' if last[f('UO')[0]] >= 70 else 
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+    st.info(
+    f"Williams %R (WILLR) Score(<=-80:BUY , >=-20:SELL): {last[f('WILLR')[0]]} , "
+    f"{':green[**BUY 🟢**]' if last[f('WILLR')[0]] <= -80 else 
+       ':red[**SELL 🔴**]' if last[f('WILLR')[0]] >= -20 else 
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+
+    #st.info(f"Chaikin Money Flow (CMF) (>0:BUY , <0:SELL): {last[f('CMF')[0]]}")
+    #st.info(f"SUPERTd DIRECTION (=1:BUY , =-1:SELL): {last[st_dir_col[0]]}")
+    #st.info(f"Ultimate Oscillator (UO)(30/70): {last[f('UO')[0]]}")
+    
     st.info(f"Donchian Channels (DC) (PRICE<=LOWER:BUY OR >=UPPER:SELL): {price } , {last[dc_lower[0]]} , {last[dc_upper[0]]}")
-    st.info(f"Williams %R (WILLR) Score(<=-80:BUY , >=-20:SELL): {last[f('WILLR')[0]]}")
+    
+    #st.info(f"Williams %R (WILLR) Score(<=-80:BUY , >=-20:SELL): {last[f('WILLR')[0]]}")
+    
     st.info(f"VWAP (PRICE>VWAP:BUY OR <VWAP:SELL): {price } , {last[f('VWAP')][0]}")
     st.info(f"PSAR (PRICE>PSAR dots:BUY OR <PSAR dots:SELL): {price } , {last[f('PSARl')][0]}")
 
