@@ -57,6 +57,7 @@ st.title("🏆 Gold Sentinel v3: Full Confluence Engine")
 
 if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     df = get_gold_signals()
+    st.write("Available columns:", df.columns.tolist())
     #df['datetime'] = pd.to_datetime(df['datetime'])
     #df.set_index('datetime', inplace=True)
 
@@ -146,7 +147,7 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     st.info(f"{':green[**BUY 🟢**]'} Confluence Score: :green[**{buy_score} 🟢**]/15 Indicators Aligning , &nbsp;&nbsp;&nbsp;&nbsp;"
     f"{':red[**SELL 🔴**]'} Confluence Score: :red[**{sell_score} 🔴**]/15 Indicators Aligning")
 
-	#st.info(f"BUY Confluence Score: {buy_score}/15 Indicators Aligning , "
+    #st.info(f"BUY Confluence Score: {buy_score}/15 Indicators Aligning , "
     #f"SELL Confluence Score: {sell_score}/15 Indicators Aligning")
 
     #st.info(f"SELL Confluence Score: {sell_score}/15 Indicators Aligning") #SRB ADDED THIS
@@ -301,9 +302,3 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     fig.update_layout(height=1000, template="plotly_dark", xaxis_rangeslider_visible=False)
     st.plotly_chart(fig, use_container_width=True)
-
-
-
-
-
-
