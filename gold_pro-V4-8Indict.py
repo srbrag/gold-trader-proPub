@@ -25,7 +25,20 @@ def get_gold_signals():
     # 3. VOLUME & FLOW
     df.ta.mfi(length=14, append=True)                  # MFI
 
-    df.ta.vwap(append=True)
+    
+# 1. Force the column to datetime objects
+    df['datetime'] = pd.to_datetime(df['datetime'])
+
+# 2. Set it as the index (Crucial for VWAP!)
+    df.set_index('datetime', inplace=True)
+
+# 3. Sort it (VWAP must be calculated in chronological order)
+    df.sort_index(inplace=True)
+
+# 4. Now run the indicator
+    df.ta.vwap(anchor="D", append=True)
+
+#df.ta.vwap(append=True)
     df.ta.psar(append=True)
     
     # 4. SPECIALIZED (CRSI - Connors RSI)
@@ -57,6 +70,7 @@ st.title("🏆 Gold Sentinel v3: Full Confluence Engine")
 
 if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     df = get_gold_signals()
+    st.write(df.index)
     st.write("Available columns:", df.columns.tolist())
     #df['datetime'] = pd.to_datetime(df['datetime'])
     #df.set_index('datetime', inplace=True)
