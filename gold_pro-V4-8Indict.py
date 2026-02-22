@@ -101,9 +101,9 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     # BUY Score Addition
     if last[f('CMF')[0]] > 0: buy_score += 1
     if last[st_dir_col[0]] == 1: buy_score += 1
-    if last[f('UO')[0]] < 30: buy_score += 1
+    if last[f('UO')[0]] <= 30: buy_score += 1
     if price <= last[dc_lower[0]]: buy_score += 1
-    if last[f('WILLR')[0]] < -80: buy_score += 1
+    if last[f('WILLR')[0]] <= -80: buy_score += 1
 
 
     sell_score = 0 #SRB ADDED THIS entire sell block
@@ -122,9 +122,9 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 # SELL Score Addition (Overbought/Bearish)
     if last[f('CMF')[0]] < 0: sell_score += 1
     if last[st_dir_col[0]] == -1: sell_score += 1
-    if last[f('UO')[0]] > 70: sell_score += 1
+    if last[f('UO')[0]] >= 70: sell_score += 1
     if price >= last[dc_upper[0]]: sell_score += 1
-    if last[f('WILLR')[0]] > -20: sell_score += 1
+    if last[f('WILLR')[0]] >= -20: sell_score += 1
 
 
     action = "WAIT / NEUTRAL"
@@ -147,9 +147,13 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     st.info(f"DMP Score(): {indicators["DMP"]}")
     st.info(f"DMN Score(): {indicators["DMN"]}")
 
-    st.info(f"PRICE<=BBL? Score: {price } , {last[get_col(df, 'BBL')]}")
-    st.info(f"PRICE>=BBU? Score: {price } , {last[get_col(df, 'BBU')]}")
+    st.info(f"(PRICE<=BBL:BUY OR >=BBU:SELL): {price } , {last[get_col(df, 'BBL')]} , {last[get_col(df, 'BBU')]}")
 
+    st.info(f"Chaikin Money Flow (CMF) (>0:BUY , <0:SELL): {last[f('CMF')[0]]}")
+    st.info(f"SUPERTd DIRECTION (=1:BUY , =-1:SELL): {last[st_dir_col[0]]}")
+    st.info(f"Ultimate Oscillator (UO)(30/70): {last[f('UO')[0]]}")
+    st.info(f"Donchian Channels (DC) (PRICE<=LOWER:BUY OR >=UPPER:SELL): {price } , {last[dc_lower[0]]} , {last[dc_upper[0]]}")
+    st.info(f"Williams %R (WILLR) Score(<=-80:BUY , >=-20:SELL): {last[f('WILLR')[0]]}")
 
 
 
