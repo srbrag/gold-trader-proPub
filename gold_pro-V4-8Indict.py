@@ -147,13 +147,55 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     f"{':green[**BUY 🟢**]' if indicators['STOCK_RSI_K'] <= 20 else 
        ':red[**SELL 🔴**]' if indicators['STOCK_RSI_K'] >= 80 else 
        ':gray[**NEUTRAL ⚪**]'}"
-)
-    st.info(f"CCI Score(100/-100): {indicators["CCI"]}")
-    st.info(f"CRSI Score(30/70): {indicators["CRSI"]}")
-    st.info(f"MFI Score(20/80): {indicators["MFI"]}")
-    st.info(f"STOCH_K Score(20/80): {indicators["STOCH_K"]}")
-    st.info(f"RSI Score(30/70): {indicators["RSI"]}")
-    st.info(f"ADX Score(25): {indicators["ADX"]}")
+            )
+
+    st.info(
+    f"CCI Score(100/-100): {indicators["CCI"]} , "
+    f"{':green[**BUY 🟢**]' if indicators["CCI"] <= -100 else 
+       ':red[**SELL 🔴**]' if indicators["CCI"] >= 100 else 
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+    st.info(
+    f"CRSI Score(30/70): {indicators["CRSI"]} , "
+    f"{':green[**BUY 🟢**]' if indicators["CRSI"] <= 30 else 
+       ':red[**SELL 🔴**]' if indicators["CRSI"] >= 70 else 
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+    st.info(
+    f"MFI Score(20/80): {indicators["MFI"]} , "
+    f"{':green[**BUY 🟢**]' if indicators["MFI"] <= 20 else 
+       ':red[**SELL 🔴**]' if indicators["MFI"] >= 80 else 
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+    st.info(
+    f"STOCH_K Score(20/80): {indicators["STOCH_K"]} , "
+    f"{':green[**BUY 🟢**]' if indicators["STOCH_K"] <= 20 else 
+       ':red[**SELL 🔴**]' if indicators["STOCH_K"] >= 80 else 
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+    st.info(
+    f"RSI Score(30/70): {indicators["RSI"]} , "
+    f"{':green[**BUY 🟢**]' if indicators["RSI"] <= 30 else 
+       ':red[**SELL 🔴**]' if indicators["RSI"] >= 70 else 
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+
+st.info(
+    f"ADX Score(25): {indicators["ADX"]} , "
+    f"{':red[**Hi Trend Strength 🔴**]' if (indicators["ADX"] >= 25 else
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+    f"{':green[**BUY 🟢**]' if (indicators["ADX"] >= 25 AND indicators["DMP"] > indicators["DMN"] else
+       ':red[**SELL 🔴**]' if (indicators["ADX"] >= 25 AND indicators["DMN"] > indicators["DMP"] else
+       ':gray[**NEUTRAL ⚪**]'}"
+            )
+
+    #st.info(f"CCI Score(100/-100): {indicators["CCI"]}")
+    #st.info(f"CRSI Score(30/70): {indicators["CRSI"]}")
+    #st.info(f"MFI Score(20/80): {indicators["MFI"]}")
+    #st.info(f"STOCH_K Score(20/80): {indicators["STOCH_K"]}")
+    #st.info(f"RSI Score(30/70): {indicators["RSI"]}")
+    #st.info(f"ADX Score(25): {indicators["ADX"]}")
     st.info(f"DMP Score(): {indicators["DMP"]}")
     st.info(f"DMN Score(): {indicators["DMN"]}")
 
@@ -197,9 +239,3 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     fig.update_layout(height=1000, template="plotly_dark", xaxis_rangeslider_visible=False)
     st.plotly_chart(fig, use_container_width=True)
-
-
-
-
-
-
