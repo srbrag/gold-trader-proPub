@@ -24,6 +24,9 @@ def get_gold_signals():
     
     # 3. VOLUME & FLOW
     df.ta.mfi(length=14, append=True)                  # MFI
+
+    df.ta.vwap(append=True)
+    df.ta.psar(append=True)
     
     # 4. SPECIALIZED (CRSI - Connors RSI)
     # CRSI = (RSI(3) + RSI(Streak, 2) + PercentRank(100)) / 3
@@ -104,7 +107,8 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     if last[f('UO')[0]] <= 30: buy_score += 1
     if price <= last[dc_lower[0]]: buy_score += 1
     if last[f('WILLR')[0]] <= -80: buy_score += 1
-
+    if last[f('VWAP')][0] < price: buy_score += 1 # Price above VWAP = Bullish
+    if last[f('PSARl')][0] < price: buy_score += 1 # PSAR dots below price
 
     sell_score = 0 #SRB ADDED THIS entire sell block
     if indicators["RSI"] >= 70: sell_score += 1 #SRB OR <30 >70
@@ -125,7 +129,8 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     if last[f('UO')[0]] >= 70: sell_score += 1
     if price >= last[dc_upper[0]]: sell_score += 1
     if last[f('WILLR')[0]] >= -20: sell_score += 1
-
+    if last[f('VWAP')][0] > price: sell_score += 1 # Price below VWAP = Bearish
+    if last[f('PSARl')][0] > price: sell_score += 1 # PSAR dots above price
 
     action = "WAIT / NEUTRAL"
     if buy_score >= 5: action = "PROBABLE BUY"
@@ -154,6 +159,8 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     st.info(f"Ultimate Oscillator (UO)(30/70): {last[f('UO')[0]]}")
     st.info(f"Donchian Channels (DC) (PRICE<=LOWER:BUY OR >=UPPER:SELL): {price } , {last[dc_lower[0]]} , {last[dc_upper[0]]}")
     st.info(f"Williams %R (WILLR) Score(<=-80:BUY , >=-20:SELL): {last[f('WILLR')[0]]}")
+    st.info(f"VWAP (PRICE>VWAP:BUY OR <VWAP:SELL): {price } , {last[f('VWAP')][0]}")
+    st.info(f"PSAR (PRICE>PSAR dots:BUY OR <PSAR dots:SELL): {price } , {last[f('PSARl')][0]}")
 
 
 
