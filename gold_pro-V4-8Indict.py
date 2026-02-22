@@ -10,7 +10,7 @@ st.set_page_config(page_title="Gold Sentinel v3", layout="wide")
 
 def get_gold_signals():
     gold = yf.Ticker("GC=F")
-    df = gold.history(period="60d", interval="1D")
+    df = gold.history(period="60d", interval="0.25h")
     
     # 1. CORE TREND & VOLATILITY
     df.ta.bbands(length=20, std=2, append=True)         # BB
@@ -315,4 +315,5 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     fig.update_layout(height=1000, template="plotly_dark", xaxis_rangeslider_visible=False)
     st.plotly_chart(fig, use_container_width=True)
+
 
