@@ -140,8 +140,11 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     # --- UI DISPLAY ---
     #st.header(f"System Verdict: {action}")
-    st.info(f"{':green[**BUY 🟢**]'} Confluence Score: {buy_score}/15 Indicators Aligning , "
-    f"SELL Confluence Score: {sell_score}/15 Indicators Aligning")
+    #st.info(f"{':green[**BUY 🟢**]'} Confluence Score: {buy_score}/15 Indicators Aligning , "
+    #f"SELL Confluence Score: {sell_score}/15 Indicators Aligning")
+
+    st.info(f"{':green[**BUY 🟢**]'} Confluence Score: {:green[**buy_score 🟢**]}/15 Indicators Aligning ,      "
+    f"{':red[**SELL 🔴**]'} Confluence Score: {sell_score}/15 Indicators Aligning")
 
     #st.info(f"BUY Confluence Score: {buy_score}/15 Indicators Aligning , "
     #f"SELL Confluence Score: {sell_score}/15 Indicators Aligning")
