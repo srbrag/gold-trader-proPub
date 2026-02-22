@@ -59,10 +59,10 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     df = get_gold_signals()
     st.write(df.index)
     # 1. Force the column to datetime objects
-    df['datetime'] = pd.to_datetime(df['datetime'])
+    df['Datetime'] = pd.to_datetime(df['Datetime'])
 
 # 2. Set it as the index (Crucial for VWAP!)
-    df.set_index('datetime', inplace=True)
+    df.set_index('Datetime', inplace=True)
 
 # 3. Sort it (VWAP must be calculated in chronological order)
     df.sort_index(inplace=True)
@@ -315,4 +315,3 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     fig.update_layout(height=1000, template="plotly_dark", xaxis_rangeslider_visible=False)
     st.plotly_chart(fig, use_container_width=True)
-
