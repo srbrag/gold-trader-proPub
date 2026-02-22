@@ -143,7 +143,7 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     #st.info(f"{':green[**BUY 🟢**]'} Confluence Score: {buy_score}/15 Indicators Aligning , "
     #f"SELL Confluence Score: {sell_score}/15 Indicators Aligning")
 
-    st.info(f"{':green[**BUY 🟢**]'} Confluence Score: :green[**{buy_score} 🟢**]/15 Indicators Aligning , " + " " * 20 +
+    st.info(f"{':green[**BUY 🟢**]'} Confluence Score: :green[**{buy_score} 🟢**]/15 Indicators Aligning , &nbsp;&nbsp;&nbsp;&nbsp"
     f"{':red[**SELL 🔴**]'} Confluence Score: :red[**{sell_score} 🔴**]/15 Indicators Aligning")
 
 	#st.info(f"BUY Confluence Score: {buy_score}/15 Indicators Aligning , "
@@ -301,6 +301,7 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     fig.update_layout(height=1000, template="plotly_dark", xaxis_rangeslider_visible=False)
     st.plotly_chart(fig, use_container_width=True)
+
 
 
 
