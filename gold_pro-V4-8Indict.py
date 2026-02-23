@@ -57,6 +57,14 @@ st.title("🏆 Gold Sentinel v3: Full Confluence Engine")
 
 if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
     df = get_gold_signals()
+# 1. Check the timestamp of the very last row
+    last_time = df.index[-1]
+    st.write(f"Latest Data Timestamp: {last_time}")
+
+# 2. Check the latest price
+    last_price = df['close'].iloc[-1]
+    st.write(f"Latest Price in App: {last_price}")
+
     #st.write(df.index)
 # Convert the index itself to DatetimeIndex
     df.index = pd.to_datetime(df.index)
@@ -322,5 +330,3 @@ if st.button('🎯 GENERATE ALPHA TRADE ORDER'):
 
     fig.update_layout(height=1000, template="plotly_dark", xaxis_rangeslider_visible=False)
     st.plotly_chart(fig, use_container_width=True)
-
-
